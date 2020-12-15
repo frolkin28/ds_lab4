@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: car-db
+  template:
+    metadata:
+      labels:
+        app: car-db
+    spec:
+      containers:
+        - image: "ds_lab4_car-db:latest"
+          name: car-db
+          ports:
+            - containerPort: 5433
+          imagePullPolicy: Never
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: car-db
+spec:
+  selector:
+    app: car-db
+  ports:
+    - port: 5433
+      targetPort: 5433

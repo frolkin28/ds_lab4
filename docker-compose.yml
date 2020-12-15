@@ -1,0 +1,127 @@
+version: '3'
+
+services:
+  user-service:
+    container_name: user-service
+    build:
+      context: ./user_service
+      dockerfile: backend.Dockerfile
+    networks:
+      - taxiapp_network
+    env_file:
+      - .env
+    depends_on:
+      - user-db
+
+  user-db:
+    container_name: user-db
+    build:
+      context: ./user_service
+      dockerfile: postgres.Dockerfile
+    networks:
+      - taxiapp_network
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+    # volumes:
+    # - user-postgres-data:/var/lib/postgresql/data
+
+  car-service:
+    container_name: car-service
+    build:
+      context: ./car_service
+      dockerfile: backend.Dockerfile
+    networks:
+      - taxiapp_network
+    env_file:
+      - .env
+    depends_on:
+      - car-db
+
+  car-db:
+    container_name: car-db
+    build:
+      context: ./car_service
+      dockerfile: postgres.Dockerfile
+    networks:
+      - taxiapp_network
+    env_file:
+      - .env
+    # volumes:
+    #   - car-postgres-data:/var/lib/postgresql/data
+
+  location-service:
+    container_name: location-service
+    build:
+      context: ./location_service
+      dockerfile: backend.Dockerfile
+    networks:
+      - taxiapp_network
+    env_file:
+      - .env
+    depends_on:
+      - location-db
+
+  location-db:
+    container_name: location-db
+    build:
+      context: ./location_service
+      dockerfile: postgres.Dockerfile
+    networks:
+      - taxiapp_network
+    env_file:
+      - .env
+    # volumes:
+    #   - location-postgres-data:/var/lib/postgresql/data
+
+  order-service:
+    container_name: order-service
+    build:
+      context: ./order_service
+      dockerfile: backend.Dockerfile
+    networks:
+      - taxiapp_network
+    env_file:
+      - .env
+    depends_on:
+      - order-db
+
+  order-db:
+    container_name: order-db
+    build:
+      context: ./order_service
+      dockerfile: postgres.Dockerfile
+    networks:
+      - taxiapp_network
+    env_file:
+      - .env
+    # volumes:
+    #   - order-postgres-data:/var/lib/postgresql/data
+  
+  server:
+    container_name: server
+    build: 
+      context: ./taxi_app
+      dockerfile: Dockerfile
+    ports:
+      - 8090:8090
+    networks:
+      - taxiapp_network
+    env_file:
+      - .env
+    depends_on: 
+      - user-service
+      # - car-service
+      # - location-service
+      # - order-service
+
+networks:
+  taxiapp_network:
+    driver: bridge
+
+# volumes:
+#   user-postgres-data:
+#   car-postgres-data:
+#   location-postgres-data:
+#   order-postgres-data:

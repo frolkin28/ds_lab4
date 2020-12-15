@@ -1,0 +1,6 @@
+1. CarController: GET("api/v1/car"), POST("api/v1/car"), DELETE("api/v1/car")
+2. LocationController: GET("api/v1/location/{title}"), POST("api/v1/location")
+3. LoginController: POST("login")
+4. OrderController: GET("api/v1/order"), POST("api/v1/order")
+5. RegistrationController: POST("register")
+6. UserController: GET("api/v1/user"), DELETE("api/v1/user/{id}")

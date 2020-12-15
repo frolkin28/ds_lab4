@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: order-db-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: order-db
+    template:
+        metadata:
+            labels:
+                app: order-db
+        spec:
+            containers:
+                - image: "ds_lab4_order-db:latest"
+                  name: order-db
+                  ports:
+                      - containerPort: 5435
+                  imagePullPolicy: Never
+                  env:
+                      - name: POSTGRES_USER
+                        value: postgres
+                      - name: POSTGRES_PASSWORD
+                        value: postgres
+                      - name: POSTGRES_DB
+                        value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: order-db
+spec:
+    selector:
+        app: order-db
+    ports:
+        - port: 5435
+          targetPort: 5435

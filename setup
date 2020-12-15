@@ -1,0 +1,15 @@
+./mvnw package -DskipTests
+./mvnw clean package -Dmaven.test.skip=true
+----
+minikube start
+kubectl create -f db/ -f services/
+minikube service server
+kubectl delete -f db/ -f services/
+
+--- image never pull
+eval $(minikube -p minikube docker-env)
+docker image ls
+
+
+---
+kubectl logs -f ...

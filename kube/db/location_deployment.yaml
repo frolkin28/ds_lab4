@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: location-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: location-db
+  template:
+    metadata:
+      labels:
+        app: location-db
+    spec:
+      containers:
+        - image: "ds_lab4_location-db:latest"
+          name: location-db
+          ports:
+            - containerPort: 5434
+          imagePullPolicy: Never
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: location-db
+spec:
+  selector:
+    app: location-db
+  ports:
+    - port: 5434
+      targetPort: 5434
