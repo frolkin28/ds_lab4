@@ -33,6 +33,8 @@ spec:
               value: "order-service"
             - name: HTTP_PORT
               value: "8080"
+            - name: GRPC_PORT
+              value: "9090"
             - name: REST_COMMUNICATION
               value: "0"
             - name: GRPC_COMMUNICATION

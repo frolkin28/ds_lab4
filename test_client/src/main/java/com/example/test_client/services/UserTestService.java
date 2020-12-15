@@ -15,7 +15,8 @@ import java.util.Map;
 public class UserTestService {
     private String token;
     private final RestTemplate restTemplate;
-    private final String url = "http://192.168.49.2:30985";
+//    private final String url = "http://192.168.49.2:30985";
+    private final String url = "http://127.0.0.1:8090";
     private final ObjectMapper objectMapper;
     private final HttpHeaders headers;
 
@@ -48,6 +49,7 @@ public class UserTestService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, headers);
         ResponseEntity<TokenResponse> response = this.restTemplate.postForEntity(this.url + "/login", entity, TokenResponse.class);
+        System.out.println(response.getBody());
         this.token = response.getBody().getToken();
         System.out.println("Testing user login");
         System.out.println(this.token);

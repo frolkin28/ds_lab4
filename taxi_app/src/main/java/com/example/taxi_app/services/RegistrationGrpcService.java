@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegistrationGRPCService {
+public class RegistrationGrpcService {
     private final ManagedChannel channel;
     private final RegistrationServiceGrpc.RegistrationServiceBlockingStub stub;
     private final String userHost = System.getenv("USER_SERVICE_HOST");
     private final int port = Integer.parseInt(System.getenv("GRPC_PORT"));
 
     @Autowired
-    public RegistrationGRPCService() {
+    public RegistrationGrpcService() {
         this.channel = ManagedChannelBuilder.forAddress(userHost, port)
                 .usePlaintext()
                 .build();
@@ -27,7 +27,6 @@ public class RegistrationGRPCService {
 
     public RegistrationResponse register(User user) {
         Role role;
-
         if (user.getRole() == com.example.taxi_app.entities.Role.DRIVER) {
             role = Role.DRIVER;
         }

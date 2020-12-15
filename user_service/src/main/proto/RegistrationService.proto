@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package com.example.grpc;
+
+
+enum Role {
+  DRIVER = 0;
+  USER = 1;
+}
+
+message RegistrationRequest {
+  string firstName = 1;
+  string lastName = 2;
+  string email = 3;
+  string password = 4;
+  Role Role = 5;
+}
+
+message RegistrationResponse {
+  string message = 1;
+}
+
+service RegistrationService {
+  rpc register(RegistrationRequest) returns (RegistrationResponse);
+}
