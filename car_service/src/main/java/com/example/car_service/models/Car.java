@@ -19,5 +19,11 @@ public class Car {
     private UUID id;
 
     private String number;
+
+    public Car(String number, String description) {
+        this.number = number;
+        this.description = description;
+    }
+
     private String description;
 }
