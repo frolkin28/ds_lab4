@@ -1,8 +1,8 @@
 package com.example.user_service.grpc;
 
 
-import com.example.grpc.RegistrationRequest;
-import com.example.grpc.RegistrationResponse;
+import com.example.grpc.UserRequest;
+import com.example.grpc.UserResponse;
 import com.example.grpc.RegistrationServiceGrpc.RegistrationServiceImplBase;
 
 import com.example.user_service.services.enums.Role;
@@ -26,17 +26,18 @@ public class RegistrationServiceImpl extends RegistrationServiceImplBase {
     }
 
     @Override
-    public void register(RegistrationRequest request, StreamObserver<RegistrationResponse> responseObserver) {
+    public void register(UserRequest request, StreamObserver<UserResponse> responseObserver) {
         String message;
         Role role;
+        User user;
         if (request.getRole().toString().equals(Role.DRIVER.toString())) {
             role = Role.DRIVER;
+            user = new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), role, request.getCarId());
         }
         else {
             role = Role.USER;
+            user = new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), role);
         }
-
-        User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword(), role);
 
         try {
             registrationService.registerUser(user);
@@ -47,7 +48,7 @@ public class RegistrationServiceImpl extends RegistrationServiceImplBase {
             message = "User already exists";
         }
 
-        RegistrationResponse response = RegistrationResponse.newBuilder()
+        UserResponse response = UserResponse.newBuilder()
                 .setMessage(message)
                 .build();
 

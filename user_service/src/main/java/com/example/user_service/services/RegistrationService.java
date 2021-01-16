@@ -22,6 +22,8 @@ public class RegistrationService {
         validationService.validateEmail(user.getEmail());
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
         user.setPassword(hashedPassword);
+        System.out.println("==== user");
+        System.out.println(user);
         userService.add(user);
     }
 

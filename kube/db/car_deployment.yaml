@@ -16,7 +16,7 @@ spec:
         - image: "ds_lab4_car-db:latest"
           name: car-db
           ports:
-            - containerPort: 5433
+            - containerPort: 5432
           imagePullPolicy: Never
           env:
             - name: POSTGRES_USER
@@ -34,5 +34,5 @@ spec:
   selector:
     app: car-db
   ports:
-    - port: 5433
-      targetPort: 5433
+    - port: 5432
+      targetPort: 5432

@@ -1,5 +1,5 @@
 FROM postgres:11
 
-EXPOSE 5435
+EXPOSE 5432
 
-CMD [ "-p", "5435" ]
+CMD [ "-p", "5432" ]

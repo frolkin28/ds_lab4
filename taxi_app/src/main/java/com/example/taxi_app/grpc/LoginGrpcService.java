@@ -1,11 +1,13 @@
-package com.example.taxi_app.services;
+package com.example.taxi_app.grpc;
 
 import com.example.grpc.*;
-import com.example.taxi_app.entities.User;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
+import org.lognet.springboot.grpc.GRpcService;
 
-public class LoginGrpcService {
+@GRpcService
+public class LoginGrpcService extends GatewayLoginServiceGrpc.GatewayLoginServiceImplBase {
     private final ManagedChannel channel;
     private final LoginServiceGrpc.LoginServiceBlockingStub stub;
     private final String userHost = System.getenv("USER_SERVICE_HOST");
@@ -18,14 +20,13 @@ public class LoginGrpcService {
         this.stub = LoginServiceGrpc.newBlockingStub(channel);
     }
 
-    public LoginResponse login(User user) {
-        LoginResponse loginResponse = stub.login(LoginRequest.newBuilder()
-                .setEmail(user.getEmail())
-                .setPassword(user.getPassword())
-                .build());
+    @Override
+    public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
+        LoginResponse loginResponse = stub.login(request);
 
+        responseObserver.onNext(loginResponse);
+        responseObserver.onCompleted();
         closeConnection();
-        return loginResponse;
     }
 
     public void closeConnection() {

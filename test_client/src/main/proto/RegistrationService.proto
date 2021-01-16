@@ -5,8 +5,8 @@ package com.example.grpc;
 
 
 enum Role {
-  DRIVER = 0;
-  USER = 1;
+    DRIVER = 0;
+    USER = 1;
 }
 
 message UserRequest {
@@ -23,6 +23,6 @@ message UserResponse {
   string message = 1;
 }
 
-service RegistrationService {
+service GatewayRegistrationService {
   rpc register(UserRequest) returns (UserResponse);
 }

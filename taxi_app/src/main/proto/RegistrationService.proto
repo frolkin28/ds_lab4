@@ -9,18 +9,24 @@ enum Role {
     USER = 1;
 }
 
-message RegistrationRequest {
-  string firstName = 1;
-  string lastName = 2;
-  string email = 3;
-  string password = 4;
-  Role Role = 5;
+message UserRequest {
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string email = 4;
+  string password = 5;
+  Role Role = 6;
+  string carId = 7;
 }
 
-message RegistrationResponse {
+message UserResponse {
   string message = 1;
 }
 
 service RegistrationService {
-  rpc register(RegistrationRequest) returns (RegistrationResponse);
+  rpc register(UserRequest) returns (UserResponse);
+}
+
+service GatewayRegistrationService {
+  rpc register(UserRequest) returns (UserResponse);
 }

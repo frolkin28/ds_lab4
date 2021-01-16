@@ -17,16 +17,17 @@ public class TestClientApplication {
 		UserTestService userTestService = new UserTestService();
 		DriverTestService driverTestService = new DriverTestService();
 
-		userTestService.testUserRegistration();
+//		userTestService.testUserRegistration();
 		userTestService.testLogin();
-		Car createdCar = userTestService.testCarCreation();
+
+//		Car createdCar = userTestService.testCarCreation();
 //		Location start = new Location(40.7177f, -73.91766f, "New York");
 //		start = userTestService.testCreateLocation(start);
 //		Location destination = new Location(41.159824f, -73.217285f, "Bridgeport");
 //		destination = userTestService.testCreateLocation(destination);
 //		Order order = new Order(start.getId().toString(), destination.getId().toString());
 //		userTestService.testCreateOrder(order);
-//
+
 //		driverTestService.testDriverRegistration(createdCar.getId());
 //		driverTestService.testLoginDriver();
 //		driverTestService.testGetOrder();

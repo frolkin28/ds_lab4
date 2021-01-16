@@ -29,8 +29,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public void add(User driver) {
-        userRepository.save(driver);
+    public void add(User user) {
+        userRepository.save(user);
     }
 
     public void remove(UUID id) {

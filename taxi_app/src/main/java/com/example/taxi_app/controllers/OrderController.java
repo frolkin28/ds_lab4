@@ -1,8 +1,6 @@
 package com.example.taxi_app.controllers;
 
-import com.example.taxi_app.entities.Car;
 import com.example.taxi_app.entities.Order;
-
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -21,7 +19,7 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<String> getOrder(HttpServletRequest request) {
-        String url = String.format("http://%s:%s/api/v1/order", this.orderDomain, this.orderPort);
+        String url = String.format("http://%s/api/v1/order", this.orderDomain);
         HttpHeaders headers = new HttpHeaders();
         String token = request.getHeader("Authorization");
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -33,7 +31,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<String> createOrder(HttpServletRequest request, @RequestBody Order order) {
-        String url = String.format("http://%s:%s/api/v1/order", this.orderDomain, this.orderPort);
+
+        String url = String.format("http://%s/api/v1/order", this.orderDomain);
         HttpHeaders headers = new HttpHeaders();
         String token = request.getHeader("Authorization");
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -41,5 +40,6 @@ public class OrderController {
         HttpEntity<Order> entity = new HttpEntity<>(order, headers);
         ResponseEntity<String> response = this.restTemplate.postForEntity(url, entity, String.class);
         return response;
+
     }
 }

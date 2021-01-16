@@ -7,7 +7,6 @@ import com.example.order_service.services.LocationService;
 import com.example.order_service.services.OrderService;
 import com.example.order_service.services.UserService;
 import com.example.order_service.services.enums.Role;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("api/v1/order")
 public class OrderController {
-    private OrderService orderService;
-    private UserService userService;
-    private LocationService locationService;
+    private final OrderService orderService;
+    private final UserService userService;
 
     @Autowired
     public OrderController(OrderService orderService, UserService userService, LocationService locationService) {
         this.orderService = orderService;
         this.userService = userService;
-        this.locationService = locationService;
     }
 
     @GetMapping

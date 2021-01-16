@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package com.example.grpc;
+
+import "LocationService.proto";
+import "RegistrationService.proto";
+import "CarService.proto";
+
+message CreateOrderRequest {
+  string startId = 1;
+  string destinationId = 2;
+  string email = 3;
+}
+
+message CreateOrderResponse {
+  string id = 1;
+  float cost = 2;
+  string startId = 3;
+  string destinationId = 4;
+  string customerId = 5;
+}
+
+message GetOrderRequest {
+  string email = 1;
+}
+
+message GetOrderResponse {
+  string id = 1;
+  float cost = 2;
+  LocationResponse start = 3;
+  LocationResponse destination = 4;
+  UserRequest driver = 5;
+  UserRequest customer = 6;
+  CarResponse car = 7;
+}
+
+service OrderService {
+  rpc create(CreateOrderRequest) returns (CreateOrderResponse);
+
+  rpc get(GetOrderRequest) returns (GetOrderResponse);
+}

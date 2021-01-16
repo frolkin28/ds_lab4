@@ -16,7 +16,7 @@ spec:
                 - image: "ds_lab4_order-db:latest"
                   name: order-db
                   ports:
-                      - containerPort: 5435
+                      - containerPort: 5432
                   imagePullPolicy: Never
                   env:
                       - name: POSTGRES_USER

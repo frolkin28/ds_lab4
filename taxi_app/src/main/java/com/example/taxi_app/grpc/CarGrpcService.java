@@ -1,10 +1,13 @@
-package com.example.taxi_app.services;
+package com.example.taxi_app.grpc;
 
 import com.example.grpc.*;
 import com.example.taxi_app.entities.Car;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import org.lognet.springboot.grpc.GRpcService;
 
+
+@GRpcService
 public class CarGrpcService {
     private final ManagedChannel channel;
     private final CarServiceGrpc.CarServiceBlockingStub stub;

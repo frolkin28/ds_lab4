@@ -13,7 +13,8 @@ import java.util.UUID;
 public class DriverTestService {
     private String token;
     private final RestTemplate restTemplate;
-    private final String url = "http://192.168.49.2:30985";
+//    private final String url = "http://192.168.49.2:30985";
+    private final String url = "http://127.0.0.1:8090";
     private final ObjectMapper objectMapper;
     private final HttpHeaders headers;
 
@@ -52,8 +53,8 @@ public class DriverTestService {
     public void testGetOrder() {
         headers.set("Authorization", this.token);
         HttpEntity<Order> entity = new HttpEntity<>(headers);
-        ResponseEntity<OrderResponse> response = this.restTemplate.exchange(url + "/api/v1/order", HttpMethod.GET, entity, OrderResponse.class);
+        ResponseEntity<String> response = this.restTemplate.exchange(url + "/api/v1/order", HttpMethod.GET, entity, String.class);
         System.out.println("Testing order getting");
-        System.out.println(response.getBody());
+//        System.out.println(response.getBody());
     }
 }

@@ -21,6 +21,12 @@ public class Location {
     private float latitude;
     private float longitude;
 
+    public Location(float latitude, float longitude, String title) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.title = title;
+    }
+
     @Column(unique = true)
     private String title;
 }
