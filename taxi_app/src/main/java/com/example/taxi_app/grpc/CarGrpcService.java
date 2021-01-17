@@ -1,14 +1,14 @@
 package com.example.taxi_app.grpc;
 
 import com.example.grpc.*;
-import com.example.taxi_app.entities.Car;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 
 
-@GRpcService
-public class CarGrpcService {
+@GRpcService(interceptors = {AuthorizationInterceptor.class})
+public class CarGrpcService extends GatewayCarServiceGrpc.GatewayCarServiceImplBase {
     private final ManagedChannel channel;
     private final CarServiceGrpc.CarServiceBlockingStub stub;
     private final String carHost = System.getenv("CAR_SERVICE_HOST");
@@ -21,14 +21,11 @@ public class CarGrpcService {
         this.stub = CarServiceGrpc.newBlockingStub(channel);
     }
 
-    public CarResponse create(Car car) {
-        CarResponse carResponse = stub.create(CarRequest.newBuilder()
-                .setNumber(car.getNumber())
-                .setDescription(car.getDescription())
-                .build());
-
-        closeConnection();
-        return carResponse;
+    @Override
+    public void create(CarRequest request, StreamObserver<CarResponse> responseObserver) {
+        CarResponse carResponse = stub.create(request);
+        responseObserver.onNext(carResponse);
+        responseObserver.onCompleted();
     }
 
     public void closeConnection() {

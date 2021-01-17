@@ -35,7 +35,7 @@ message GetOrderResponse {
   CarResponse car = 7;
 }
 
-service OrderService {
+service GatewayOrderService {
   rpc create(CreateOrderRequest) returns (CreateOrderResponse);
 
   rpc get(GetOrderRequest) returns (GetOrderResponse);

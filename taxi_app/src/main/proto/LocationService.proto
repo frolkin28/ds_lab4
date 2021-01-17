@@ -20,3 +20,7 @@ message LocationResponse {
 service LocationService {
   rpc create(LocationRequest) returns (LocationResponse);
 }
+
+service GatewayLocationService {
+  rpc create(LocationRequest) returns (LocationResponse);
+}

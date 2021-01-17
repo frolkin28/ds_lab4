@@ -40,3 +40,9 @@ service OrderService {
 
   rpc get(GetOrderRequest) returns (GetOrderResponse);
 }
+
+service GatewayOrderService {
+  rpc create(CreateOrderRequest) returns (CreateOrderResponse);
+
+  rpc get(GetOrderRequest) returns (GetOrderResponse);
+}

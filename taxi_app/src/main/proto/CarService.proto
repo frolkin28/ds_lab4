@@ -18,3 +18,7 @@ message CarResponse {
 service CarService {
   rpc create(CarRequest) returns (CarResponse);
 }
+
+service GatewayCarService {
+  rpc create(CarRequest) returns (CarResponse);
+}

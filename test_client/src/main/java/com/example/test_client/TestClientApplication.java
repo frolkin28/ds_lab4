@@ -1,5 +1,7 @@
 package com.example.test_client;
 
+import com.example.grpc.CarResponse;
+import com.example.grpc.LocationResponse;
 import com.example.test_client.entities.Car;
 import com.example.test_client.entities.Location;
 import com.example.test_client.entities.Order;
@@ -17,20 +19,20 @@ public class TestClientApplication {
 		UserTestService userTestService = new UserTestService();
 		DriverTestService driverTestService = new DriverTestService();
 
-//		userTestService.testUserRegistration();
+		userTestService.testUserRegistration();
 		userTestService.testLogin();
 
-//		Car createdCar = userTestService.testCarCreation();
-//		Location start = new Location(40.7177f, -73.91766f, "New York");
-//		start = userTestService.testCreateLocation(start);
-//		Location destination = new Location(41.159824f, -73.217285f, "Bridgeport");
-//		destination = userTestService.testCreateLocation(destination);
-//		Order order = new Order(start.getId().toString(), destination.getId().toString());
-//		userTestService.testCreateOrder(order);
+		CarResponse createdCar = userTestService.testCarCreation();
+		Location start = new Location(40.7177f, -73.91766f, "New York");
+		LocationResponse startLoc = userTestService.testCreateLocation(start);
+		Location destination = new Location(41.159824f, -73.217285f, "Bridgeport");
+		LocationResponse destinationLoc = userTestService.testCreateLocation(destination);
+		Order order = new Order(startLoc.getId(), destinationLoc.getId());
+		userTestService.testCreateOrder(order);
 
-//		driverTestService.testDriverRegistration(createdCar.getId());
-//		driverTestService.testLoginDriver();
-//		driverTestService.testGetOrder();
+		driverTestService.testDriverRegistration(createdCar.getId());
+		driverTestService.testLoginDriver();
+		driverTestService.testGetOrder();
 	}
 
 }

@@ -29,7 +29,6 @@ public class RegistrationGrpcService extends GatewayRegistrationServiceGrpc.Gate
 
         responseObserver.onNext(registrationResponse);
         responseObserver.onCompleted();
-        closeConnection();
     }
 
     public void closeConnection() {

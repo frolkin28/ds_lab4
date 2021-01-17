@@ -57,8 +57,6 @@ public class OrderServiceImpl extends OrderServiceImplBase {
     @Override
     public void get(GetOrderRequest request, StreamObserver<GetOrderResponse> responseObserver) {
         String email = (String) request.getEmail();
-        System.out.println("Email: ");
-        System.out.println(email);
         User driver = userService.getByEmail(email);
         Role role = driver.getRole();
 

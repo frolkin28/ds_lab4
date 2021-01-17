@@ -1,11 +1,13 @@
 package com.example.test_client.services;
 
+import com.example.test_client.entities.Location;
+import com.example.test_client.entities.Order;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import com.example.grpc.*;
 
 public class UserTestService {
-    private String token;
+    private BearerToken bearerToken;
     private final ManagedChannel channel;
     //    private final String url = "http://192.168.49.2:30985";
     private final String host = "localhost";
@@ -38,41 +40,59 @@ public class UserTestService {
 
 
     public void testLogin() {
-        GatewayLoginServiceGrpc.GatewayLoginServiceBlockingStub stub = GatewayLoginServiceGrpc.newBlockingStub(channel);
+        GatewayLoginServiceGrpc.GatewayLoginServiceBlockingStub stub = GatewayLoginServiceGrpc
+                .newBlockingStub(channel);
         LoginResponse response = stub.login(LoginRequest.newBuilder()
                 .setEmail("first@example.com")
                 .setPassword("password")
                 .build());
 
-        this.token = response.getToken();
-        System.out.println(this.token);
+        String token = response.getToken();
+        System.out.println(token);
+        this.bearerToken = new BearerToken(token);
     }
 
-//    public Car testCarCreation() {
-//        Car car = new Car("BB4058AC", "Lada 2105");
-//        this.headers.set("Authorization", this.token);
-//        HttpEntity<Car> entity = new HttpEntity<>(car, headers);
-//        ResponseEntity<Car> response = this.restTemplate.postForEntity(url + "/api/v1/car", entity, Car.class);
-//        System.out.println("Testing car creation");
-//        System.out.println(response.getBody());
-//        return response.getBody();
-//    }
-//
-//    public Location testCreateLocation(Location location) {
-//        headers.set("Authorization", this.token);
-//        HttpEntity<Location> entity = new HttpEntity<>(location, headers);
-//        ResponseEntity<Location> response = this.restTemplate.postForEntity(url + "/api/v1/location", entity, Location.class);
-//        System.out.println("Testing location creation");
-//        System.out.println(response.getBody());
-//        return response.getBody();
-//    }
-//
-//    public void testCreateOrder(Order order) {
-//        headers.set("Authorization", this.token);
-//        HttpEntity<Order> entity = new HttpEntity<>(order, headers);
-//        ResponseEntity<Order> response = this.restTemplate.postForEntity(url + "/api/v1/order", entity, Order.class);
-//        System.out.println("Testing order creation");
-//        System.out.println(response.getBody());
-//    }
+    public CarResponse testCarCreation() {
+        GatewayCarServiceGrpc.GatewayCarServiceBlockingStub stub = GatewayCarServiceGrpc
+                .newBlockingStub(channel)
+                .withCallCredentials(this.bearerToken);
+
+        CarResponse carResponse = stub.create(CarRequest.newBuilder()
+                .setNumber("BB4058AC")
+                .setDescription("Lada 2105")
+                .build());
+
+        System.out.println(carResponse);
+
+        return carResponse;
+    }
+
+    public LocationResponse testCreateLocation(Location location) {
+        GatewayLocationServiceGrpc.GatewayLocationServiceBlockingStub stub = GatewayLocationServiceGrpc
+                .newBlockingStub(channel)
+                .withCallCredentials(this.bearerToken);
+
+        LocationResponse locationResponse = stub.create(LocationRequest.newBuilder()
+                .setTitle(location.getTitle())
+                .setLatitude(location.getLatitude())
+                .setLongitude(location.getLongitude())
+                .build());
+
+        System.out.println(locationResponse);
+        return locationResponse;
+    }
+
+    public void testCreateOrder(Order order) {
+        GatewayOrderServiceGrpc.GatewayOrderServiceBlockingStub stub = GatewayOrderServiceGrpc
+                .newBlockingStub(channel)
+                .withCallCredentials(this.bearerToken);
+
+        CreateOrderResponse orderResponse = stub.create(CreateOrderRequest.newBuilder()
+                .setStartId(order.getStartId())
+                .setDestinationId(order.getDestinationId())
+                .build());
+
+        System.out.println(orderResponse);
+    }
 }
 

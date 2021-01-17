@@ -13,9 +13,6 @@ message LoginResponse {
   string token = 1;
 }
 
-service LoginService {
-  rpc login(LoginRequest) returns (LoginResponse);
-}
 
 service GatewayLoginService {
   rpc login(LoginRequest) returns (LoginResponse);

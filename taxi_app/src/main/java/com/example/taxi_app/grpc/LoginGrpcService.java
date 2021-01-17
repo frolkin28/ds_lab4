@@ -26,7 +26,6 @@ public class LoginGrpcService extends GatewayLoginServiceGrpc.GatewayLoginServic
 
         responseObserver.onNext(loginResponse);
         responseObserver.onCompleted();
-        closeConnection();
     }
 
     public void closeConnection() {

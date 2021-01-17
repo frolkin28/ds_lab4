@@ -17,6 +17,6 @@ message LocationResponse {
   string title = 4;
 }
 
-service LocationService {
+service GatewayLocationService {
   rpc create(LocationRequest) returns (LocationResponse);
 }

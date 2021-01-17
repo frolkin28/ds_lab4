@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 public class Order implements Serializable {
-    private UUID id;
+    private String id;
     private float cost;
     private String startId;
     private String destinationId;

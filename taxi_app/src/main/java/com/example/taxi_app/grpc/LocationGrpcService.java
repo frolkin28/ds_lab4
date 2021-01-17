@@ -1,11 +1,14 @@
 package com.example.taxi_app.grpc;
 
 import com.example.grpc.*;
-import com.example.taxi_app.entities.Location;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
+import org.lognet.springboot.grpc.GRpcService;
 
-public class LocationGrpcService {
+
+@GRpcService(interceptors = {AuthorizationInterceptor.class})
+public class LocationGrpcService extends GatewayLocationServiceGrpc.GatewayLocationServiceImplBase {
     private final ManagedChannel channel;
     private final LocationServiceGrpc.LocationServiceBlockingStub stub;
     private final String locationHost = System.getenv("LOCATION_SERVICE_HOST");
@@ -18,15 +21,11 @@ public class LocationGrpcService {
         this.stub = LocationServiceGrpc.newBlockingStub(channel);
     }
 
-    public LocationResponse create(Location location) {
-        LocationResponse locationResponse = stub.create(LocationRequest.newBuilder()
-                .setLatitude(location.getLatitude())
-                .setLongitude(location.getLongitude())
-                .setTitle(location.getTitle())
-                .build());
-
-        closeConnection();
-        return locationResponse;
+    @Override
+    public void create(LocationRequest request, StreamObserver<LocationResponse> responseObserver) {
+        LocationResponse locationResponse = stub.create(request);
+        responseObserver.onNext(locationResponse);
+        responseObserver.onCompleted();
     }
 
     public void closeConnection() {
